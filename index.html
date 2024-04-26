@@ -340,6 +340,9 @@
                         <th scope="row">bild_baver</th>\
                         <td>' + (feature.properties['bild_baver'] !== null ? '<img src="images/' + String(feature.properties['bild_baver']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
                     </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BÄVER'] !== null ? autolinker.link(feature.properties['BÄVER'].toLocaleString()) : '') + '</td>\
+                    </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
             var popup = layer.getPopup();
