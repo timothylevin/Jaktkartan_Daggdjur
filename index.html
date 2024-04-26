@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <style>
+        #map {
+            width: 1403px;
+            height: 827px;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="data/Allman_jakt_daggdjur_ej_skane_ny_fields_0.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[51.93388158110741,-4.883621629907557],[69.02651017240173,53.880689451868854]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+        document.querySelector(".leaflet-popup-pane").addEventListener("load", function(event) {
+          var tagName = event.target.tagName,
+            popup = map._popup;
+          // Also check if flag is already set.
+          if (tagName === "IMG" && popup && !popup._updated) {
+            popup._updated = true; // Set flag to prevent looping.
+            popup.update();
+          }
+        }, true);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        function pop_Allman_jakt_daggdjur_ej_skane_ny_fields_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">aa_lan_nam</th>\
+                        <td class="visible-with-data" id="aa_lan_nam">' + (feature.properties['aa_lan_nam'] !== null ? autolinker.link(feature.properties['aa_lan_nam'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">baver1_all</th>\
+                        <td class="visible-with-data" id="baver1_all">' + (feature.properties['baver1_all'] !== null ? autolinker.link(feature.properties['baver1_all'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">baver2_all</th>\
+                        <td class="visible-with-data" id="baver2_all">' + (feature.properties['baver2_all'] !== null ? autolinker.link(feature.properties['baver2_all'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">baver3_til</th>\
+                        <td class="visible-with-data" id="baver3_til">' + (feature.properties['baver3_til'] !== null ? autolinker.link(feature.properties['baver3_til'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">baver4_kul</th>\
+                        <td class="visible-with-data" id="baver4_kul">' + (feature.properties['baver4_kul'] !== null ? autolinker.link(feature.properties['baver4_kul'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">baver5_hag</th>\
+                        <td class="visible-with-data" id="baver5_hag">' + (feature.properties['baver5_hag'] !== null ? autolinker.link(feature.properties['baver5_hag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov1_alla_'] !== null ? autolinker.link(feature.properties['dov1_alla_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov2_alla_'] !== null ? autolinker.link(feature.properties['dov2_alla_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov3_alla_'] !== null ? autolinker.link(feature.properties['dov3_alla_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov4_alla_'] !== null ? autolinker.link(feature.properties['dov4_alla_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov5_hind_'] !== null ? autolinker.link(feature.properties['dov5_hind_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov6_hind_'] !== null ? autolinker.link(feature.properties['dov6_hind_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov7_hind_'] !== null ? autolinker.link(feature.properties['dov7_hind_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov8_hind_'] !== null ? autolinker.link(feature.properties['dov8_hind_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov9_hornb'] !== null ? autolinker.link(feature.properties['dov9_hornb'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov91_horn'] !== null ? autolinker.link(feature.properties['dov91_horn'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov92_till'] !== null ? autolinker.link(feature.properties['dov92_till'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov93_kulv'] !== null ? autolinker.link(feature.properties['dov93_kulv'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['dov94_hage'] !== null ? autolinker.link(feature.properties['dov94_hage'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['falthare1_'] !== null ? autolinker.link(feature.properties['falthare1_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['falthare2_'] !== null ? autolinker.link(feature.properties['falthare2_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['falthare3_'] !== null ? autolinker.link(feature.properties['falthare3_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['falthare4_'] !== null ? autolinker.link(feature.properties['falthare4_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['falthare5_'] !== null ? autolinker.link(feature.properties['falthare5_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gravling1_'] !== null ? autolinker.link(feature.properties['gravling1_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gravling2_'] !== null ? autolinker.link(feature.properties['gravling2_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gravling3_'] !== null ? autolinker.link(feature.properties['gravling3_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gravling4_'] !== null ? autolinker.link(feature.properties['gravling4_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['gravling5_'] !== null ? autolinker.link(feature.properties['gravling5_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iller1_all'] !== null ? autolinker.link(feature.properties['iller1_all'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iller2_all'] !== null ? autolinker.link(feature.properties['iller2_all'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iller3_til'] !== null ? autolinker.link(feature.properties['iller3_til'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iller4_kul'] !== null ? autolinker.link(feature.properties['iller4_kul'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['iller5_hag'] !== null ? autolinker.link(feature.properties['iller5_hag'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh1_sko'] !== null ? autolinker.link(feature.properties['kronh1_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh2_sko'] !== null ? autolinker.link(feature.properties['kronh2_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh3_sko'] !== null ? autolinker.link(feature.properties['kronh3_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh4_sko'] !== null ? autolinker.link(feature.properties['kronh4_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh5_sko'] !== null ? autolinker.link(feature.properties['kronh5_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh6_sko'] !== null ? autolinker.link(feature.properties['kronh6_sko'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh7_ore'] !== null ? autolinker.link(feature.properties['kronh7_ore'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh8_ore'] !== null ? autolinker.link(feature.properties['kronh8_ore'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh9_kal'] !== null ? autolinker.link(feature.properties['kronh9_kal'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh91_ka'] !== null ? autolinker.link(feature.properties['kronh91_ka'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh92_ti'] !== null ? autolinker.link(feature.properties['kronh92_ti'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh93_ku'] !== null ? autolinker.link(feature.properties['kronh93_ku'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['kronh94_ha'] !== null ? autolinker.link(feature.properties['kronh94_ha'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur1_al'] !== null ? autolinker.link(feature.properties['radjur1_al'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur2_al'] !== null ? autolinker.link(feature.properties['radjur2_al'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur3_ho'] !== null ? autolinker.link(feature.properties['radjur3_ho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur4_ho'] !== null ? autolinker.link(feature.properties['radjur4_ho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur5_ho'] !== null ? autolinker.link(feature.properties['radjur5_ho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur6_ho'] !== null ? autolinker.link(feature.properties['radjur6_ho'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur7_ki'] !== null ? autolinker.link(feature.properties['radjur7_ki'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur8_ki'] !== null ? autolinker.link(feature.properties['radjur8_ki'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur9_ti'] !== null ? autolinker.link(feature.properties['radjur9_ti'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur91_k'] !== null ? autolinker.link(feature.properties['radjur91_k'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['radjur92_h'] !== null ? autolinker.link(feature.properties['radjur92_h'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['rodrav1_al'] !== null ? autolinker.link(feature.properties['rodrav1_al'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['rodrav2_al'] !== null ? autolinker.link(feature.properties['rodrav2_al'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['rodrav3_ti'] !== null ? autolinker.link(feature.properties['rodrav3_ti'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['rodrav4_ku'] !== null ? autolinker.link(feature.properties['rodrav4_ku'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['rodrav5_ha'] !== null ? autolinker.link(feature.properties['rodrav5_ha'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogshare1'] !== null ? autolinker.link(feature.properties['skogshare1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogshare2'] !== null ? autolinker.link(feature.properties['skogshare2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogshare3'] !== null ? autolinker.link(feature.properties['skogshare3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogshare4'] !== null ? autolinker.link(feature.properties['skogshare4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogshare5'] !== null ? autolinker.link(feature.properties['skogshare5'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogsmard1'] !== null ? autolinker.link(feature.properties['skogsmard1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogsmard2'] !== null ? autolinker.link(feature.properties['skogsmard2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogsmard3'] !== null ? autolinker.link(feature.properties['skogsmard3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogsmard4'] !== null ? autolinker.link(feature.properties['skogsmard4'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['skogsmard5'] !== null ? autolinker.link(feature.properties['skogsmard5'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin1_'] !== null ? autolinker.link(feature.properties['vildsvin1_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin2_'] !== null ? autolinker.link(feature.properties['vildsvin2_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin3_'] !== null ? autolinker.link(feature.properties['vildsvin3_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin4_'] !== null ? autolinker.link(feature.properties['vildsvin4_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin5_'] !== null ? autolinker.link(feature.properties['vildsvin5_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin6_'] !== null ? autolinker.link(feature.properties['vildsvin6_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['vildsvin7_'] !== null ? autolinker.link(feature.properties['vildsvin7_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xalg1'] !== null ? autolinker.link(feature.properties['xalg1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xalg2_datu'] !== null ? autolinker.link(feature.properties['xalg2_datu'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xalg3_till'] !== null ? autolinker.link(feature.properties['xalg3_till'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xalg4_kulv'] !== null ? autolinker.link(feature.properties['xalg4_kulv'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['xalg5_hage'] !== null ? autolinker.link(feature.properties['xalg5_hage'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['shape_area'] !== null ? autolinker.link(feature.properties['shape_area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['shape_leng'] !== null ? autolinker.link(feature.properties['shape_leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">bild_baver</th>\
+                        <td>' + (feature.properties['bild_baver'] !== null ? '<img src="images/' + String(feature.properties['bild_baver']).replace(/[\\\/:]/g, '_').trim() + '">' : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+            var popup = layer.getPopup();
+            var content = popup.getContent();
+            var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
+            popup.setContent(updatedContent);
+        }
+
+        function style_Allman_jakt_daggdjur_ej_skane_ny_fields_0_0(feature) {
+            switch(String(feature.properties['aa_lan_nam'])) {
+                case 'Blekinge län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(133,82,226,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Dalarnas län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(240,178,145,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gotlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(203,235,75,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Gävleborgs län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(203,111,157,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Hallands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(121,206,230,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jämtlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(16,234,219,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Jönköpings län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(29,235,105,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Kalmar län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(207,124,119,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Kronobergs län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(70,224,170,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Norrbottens län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(137,130,234,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Stockholms län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(36,121,205,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Södermanlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(211,174,109,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Uppsala län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(43,79,211,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Värmlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(210,96,185,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Västerbottens län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(139,220,53,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Västernorrlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(85,227,96,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Västmanlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(169,54,235,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Västra Götalands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(204,44,79,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Örebro län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(192,35,203,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                case 'Östergötlands län':
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(235,219,42,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+                default:
+                    return {
+                pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+                opacity: 1,
+                color: 'rgba(114,237,84,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0');
+        map.getPane('pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0').style.zIndex = 400;
+        map.getPane('pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0').style['mix-blend-mode'] = 'normal';
+        var layer_Allman_jakt_daggdjur_ej_skane_ny_fields_0 = new L.geoJson(json_Allman_jakt_daggdjur_ej_skane_ny_fields_0, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+            layerName: 'layer_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+            pane: 'pane_Allman_jakt_daggdjur_ej_skane_ny_fields_0',
+            onEachFeature: pop_Allman_jakt_daggdjur_ej_skane_ny_fields_0,
+            style: style_Allman_jakt_daggdjur_ej_skane_ny_fields_0_0,
+        });
+        bounds_group.addLayer(layer_Allman_jakt_daggdjur_ej_skane_ny_fields_0);
+        map.addLayer(layer_Allman_jakt_daggdjur_ej_skane_ny_fields_0);
+        setBounds();
+        </script>
+    </body>
+</html>
