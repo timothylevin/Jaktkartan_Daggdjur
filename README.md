@@ -1,2 +1,2 @@
-# Jaktkartan_Daggdjur_o_fagel
+# Jaktkartan_Daggdjur
 Allmän jakt för Däggdjur och fågel. jakttider, jaktregler.
