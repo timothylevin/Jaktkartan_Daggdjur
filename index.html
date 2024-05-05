@@ -159,7 +159,7 @@
                         <td>' + (feature.properties['shape_area'] !== null ? autolinker.link(feature.properties['shape_area'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, {maxHeight: 400} {minHeight: 400});
             var popup = layer.getPopup();
             var content = popup.getContent();
             var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
@@ -548,7 +548,7 @@
                         <td class="visible-with-data" id="xalg5_hage"colspan="2"><strong>Hagelvapen:</strong><br />' + (feature.properties['xalg5_hage'] !== null ? autolinker.link(feature.properties['xalg5_hage'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, {maxHeight: 400} {minHeight: 400});
             var popup = layer.getPopup();
             var content = popup.getContent();
             var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
