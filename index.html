@@ -159,7 +159,7 @@
                         <td>' + (feature.properties['shape_area'] !== null ? autolinker.link(feature.properties['shape_area'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, {minHeight: 400});
             var popup = layer.getPopup();
             var content = popup.getContent();
             var updatedContent = removeEmptyRowsFromPopupContent(content, feature);
