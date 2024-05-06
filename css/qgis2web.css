@@ -35,6 +35,7 @@
             max-height: 30vw;
                 min-height: 60vh;
             max-width: 70vw;
+                min-width: 25vw;
             overflow: auto;
         }
         th {
