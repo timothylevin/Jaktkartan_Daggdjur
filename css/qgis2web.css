@@ -33,7 +33,7 @@
         }
         .leaflet-popup-content{
             max-height: 30vw;
-                min-height: 60vw;
+                min-height: 60vh;
             max-width: 70vw;
             overflow: auto;
         }
